@@ -1,0 +1,4 @@
+processed/
+outputs_*/
+__pycache__/
+*.py[cod]
