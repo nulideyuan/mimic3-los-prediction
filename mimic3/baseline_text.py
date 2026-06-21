@@ -57,7 +57,7 @@ models = [
     ("ClinicalBERT only (section LSTM)",  "pred_lstm_only.npy"),
     ("Early Fusion (struct + mean note)", "pred_struct_plus_mean_note.npy"),
     ("Early Fusion (struct + last note)", "pred_struct_plus_last_note.npy"),
-    ("Tabular + BERT no MoE (struct + LSTM)", "pred_struct_plus_gated_lstm.npy"),
+    ("Tabular + BERT no MoE (struct + LSTM)", "pred_struct_plus_lstm_ungated.npy"),
 ]
 
 rows = []
