@@ -38,11 +38,13 @@ from utils import LSTMWithAttention, pad_seq, SECTIONS_TO_USE, set_seed
 parser = argparse.ArgumentParser()
 parser.add_argument("--hadm-ids", nargs="*", type=int, default=None,
                     help="Specific hadm_ids to predict. If omitted, uses saved test split.")
-parser.add_argument("--output-dir", default="outputs_mimic3_lstm_full_gated_residual")
+parser.add_argument("--model-dir", default="mimic3_dataset/mimic3/models")
+parser.add_argument("--seqs-cache", default="outputs_mimic3_lstm_full_gated_residual/seqs.pkl",
+                    help="path to seqs.pkl (ClinicalBERT section embeddings cache)")
 parser.add_argument("--max-notes", type=int, default=8)
 args = parser.parse_args()
 
-OUT = args.output_dir
+OUT = args.model_dir
 set_seed(42)
 
 device = (
@@ -117,7 +119,7 @@ X_struct = np.array(
 # ── Load seqs and extract LSTM features ──────────────────────────────────────
 
 print("Loading section embeddings (seqs)...")
-seqs_path = f"{OUT}/seqs.pkl"
+seqs_path = args.seqs_cache
 with open(seqs_path, "rb") as f:
     seqs = pickle.load(f)
 
@@ -172,7 +174,7 @@ df_out = pd.DataFrame({
     "resid_pred":  resid_pred,
     "final_pred":  final_pred,
 })
-out_path = f"{OUT}/m5_predictions.csv"
+out_path = "m5_predictions.csv"
 df_out.to_csv(out_path, index=False)
 print(f"\nSaved: {out_path}")
 
